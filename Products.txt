@@ -1,0 +1,9 @@
+Laptop,999.99,1
+Tablet,299.99,6
+Headphones,99.99,20
+Printer,199.99,8
+Phone,Apple,599.99,2
+Phone,Samsung,499.99,2
+Camera,Fujifilm,26,799.99,11
+Camera,Canon,30,899.99,25
+Camera,Sony,19,649.99,7
