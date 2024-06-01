@@ -13,7 +13,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author mcste
+ * @author neill
  */
 public class DatabaseInitializer {
 
