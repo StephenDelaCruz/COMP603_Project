@@ -46,6 +46,6 @@ public class Product {
     }
     
     public String toString(){
-        return String.format("ProductID: %d, Item: %s, Price: %.2f, Stock: %d", id, name, price, stock);
+        return String.format("ProductID: %d, Item: %s, Price: $%.2f, Stock: %d", id, name, price, stock);
     }
 }
