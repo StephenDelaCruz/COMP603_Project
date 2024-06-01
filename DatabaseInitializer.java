@@ -142,22 +142,6 @@ public class DatabaseInitializer {
             e.printStackTrace();
         }
     }
-    
-    public void createOrderItems(){
-        try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-            this.statement = conn.createStatement();
-            this.checkExistedTable("ORDERITEMS");
-            this.statement.addBatch("CREATE TABLE OrderItems (ORDERID INT, PRODUCTID INT, "
-                    + "CONSTRAINT OrderItems_ORDERID_fk FOREIGN KEY (ORDERID) REFERENCES Transactions (ORDERID), "
-                    + "CONSTRAINT OrderItems_PRODUCTID_fk FOREIGN KEY (PRODUCTID) REFERENCES Products(PRODUCTID))");
-            
-            this.statement.executeBatch();
-            System.out.println("Tables created successfully.");
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void checkExistedTable(String name) {
         try {
