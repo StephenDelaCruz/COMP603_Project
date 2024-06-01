@@ -1,3 +1,0 @@
-stephen,1234,stephen@gmail.com
-neil,5678,neil@gmail.com
-guest,guest,guest@gmail.com
