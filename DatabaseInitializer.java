@@ -129,7 +129,7 @@ public class DatabaseInitializer {
     }
      
      public void createTransactions(){
-        try ( Connection conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD)) {
+        try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
             this.checkExistedTable("TRANSACTIONS");
             this.statement.addBatch("CREATE TABLE Transactions (ORDERID INT PRIMARY KEY, USERNAME VARCHAR(255), TOTALPRICE DOUBLE, "
@@ -144,7 +144,7 @@ public class DatabaseInitializer {
     }
     
     public void createOrderItems(){
-        try ( Connection conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD)) {
+        try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
             this.checkExistedTable("ORDERITEMS");
             this.statement.addBatch("CREATE TABLE OrderItems (ORDERID INT, PRODUCTID INT, "
