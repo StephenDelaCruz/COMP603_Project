@@ -140,7 +140,7 @@ public class DatabaseInitializer {
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
             this.checkExistedTable("USERS");
-            this.statement.addBatch("CREATE TABLE Users (USERNAME VARCHAR(255) PRIMARY KEY, PASSWORD VARCHAR(255), EMAIL VARCHAR(255))");
+            this.statement.addBatch("CREATE TABLE Users (USERNAME VARCHAR(15) PRIMARY KEY, PASSWORD VARCHAR(15), EMAIL VARCHAR(255))");
 
             this.statement.addBatch("INSERT INTO Users VALUES('user', 'user', 'user@gmail.com'),\n"
                     + "('neil', 'luna8', 'neilluna8@gmail.com'),\n"
