@@ -13,10 +13,10 @@ public class PearStoreApp {
     public static void main(String[] args) {
 
         DatabaseInitializer dbi = new DatabaseInitializer();
-        dbi.createProducts();
+        dbi.createProductsTable();
         dbi.addWarrantyColumnToProducts();  
-        dbi.createUsers();
-        dbi.createTransactions();
+        dbi.createUsersTable();
+        dbi.createTransactionsTable();
 
         MainMenuView mainView = new MainMenuView();
         ProductModel productDAO = new ProductModel();
