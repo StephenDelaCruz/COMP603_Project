@@ -16,27 +16,23 @@ public class ProductModel {
 
     private static final String URL = "jdbc:derby:PearStoreDB_Ebd";
 
-    public List<Product> getAllProducts() {
-        List<Product> products = new ArrayList<>();
-        String query = "SELECT * FROM PRODUCTS";
-
-        try ( Connection conn = DriverManager.getConnection(URL, "pdc", "pdc");
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                int id = rs.getInt("PRODUCTID");
-                String item = rs.getString("ITEM");
-                double price = rs.getDouble("PRICE");
-                int stock = rs.getInt("STOCK");
-
-
-                    products.add(new Product(id, item, price, stock));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+public List<Product> getAllProducts() {
+    List<Product> products = new ArrayList<>();
+    String query = "SELECT * FROM PRODUCTS";
+    try (Connection conn = DriverManager.getConnection(URL, "pdc", "pdc");
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(query)) {
+        while (rs.next()) {
+            int id = rs.getInt("PRODUCTID");
+            String item = rs.getString("ITEM");
+            double price = rs.getDouble("PRICE");
+            int stock = rs.getInt("STOCK");
+            int warranty = rs.getInt("WARRANTY");  
+            products.add(new Product(id, item, price, stock, warranty));
         }
-
-        return products;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return products;
+}
 }
