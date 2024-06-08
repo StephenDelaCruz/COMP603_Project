@@ -21,12 +21,13 @@ public class DatabaseInitializer {
     private static final String PASSWORD = "pdc";
     private static final String URL = "jdbc:derby:PearStoreDB_Ebd; create=true";
     private Statement statement;
+
     private static Connection conn;
 
     public DatabaseInitializer() {
         establishConnection();
     }
-    
+
     public static void main(String[] args) {
         DatabaseInitializer dbi = new DatabaseInitializer();
         System.out.println(dbi.getConnection());
@@ -36,7 +37,7 @@ public class DatabaseInitializer {
         return this.conn;
     }
 
-    private static void establishConnection() {
+    public static void establishConnection() {
         try {
             conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println(URL + " connected.");
@@ -57,8 +58,8 @@ public class DatabaseInitializer {
 
     public ResultSet queryDB(String sql) {
 
-        java.sql.Connection connection = this.conn;
-        java.sql.Statement statement = null;
+        Connection connection = this.conn;
+        Statement statement = null;
         ResultSet resultSet = null;
 
         try {
@@ -73,8 +74,8 @@ public class DatabaseInitializer {
 
     public void updateDB(String sql) {
 
-        java.sql.Connection connection = this.conn;
-        java.sql.Statement statement = null;
+        Connection connection = this.conn;
+        Statement statement = null;
         ResultSet resultSet = null;
 
         try {
@@ -87,10 +88,10 @@ public class DatabaseInitializer {
     }
 
     public void createProducts() {
-        try ( java.sql.Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+        try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
             this.checkExistedTable("PRODUCTS");
-            this.statement.addBatch("CREATE TABLE products (PRODUCTID INT PRIMARY KEY, ITEM VARCHAR(255), PRICE DOUBLE, STOCK INT)");
+            this.statement.addBatch("CREATE TABLE Products (PRODUCTID INT PRIMARY KEY, ITEM VARCHAR(255), PRICE DOUBLE, STOCK INT)");
 
             this.statement.addBatch("INSERT INTO Products VALUES (1, 'Laptop', 999.99, 6),\n"
                     + "(2, 'Computer', 1499.99, 35),\n"
@@ -103,41 +104,65 @@ public class DatabaseInitializer {
                     + "(9, 'Camera', 899.99, 19)");
 
             this.statement.executeBatch();
+
             System.out.println("Tables created successfully.");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-     public void createUsers() {
-        try ( java.sql.Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
+
+    public void addWarrantyToProducts() {
+        try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);  Statement stmt = conn.createStatement()) {
+
+            stmt.execute("ALTER TABLE Products ADD COLUMN WARRANTY INT");
+            System.out.println("Added WARRANTY column to Products table.");
+
+            stmt.executeUpdate("UPDATE Products SET WARRANTY = CASE "
+                    + "WHEN ITEM='Laptop' THEN 2 "
+                    + "WHEN ITEM='Computer' THEN 3 "
+                    + "WHEN ITEM='Phone' THEN 1 "
+                    + "WHEN ITEM='Tablet' THEN 1 "
+                    + "WHEN ITEM='Headphones' THEN 1 "
+                    + "WHEN ITEM='Earphones' THEN 1 "
+                    + "WHEN ITEM='Speaker' THEN 2 "
+                    + "WHEN ITEM='Printer' THEN 2 "
+                    + "WHEN ITEM='Camera' THEN 2 "
+                    + "ELSE 0 END");
+            System.out.println("Updated WARRANTY values for products.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createUsers() {
+        try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
             this.checkExistedTable("USERS");
-            this.statement.addBatch("CREATE TABLE Users (USERNAME VARCHAR(20) PRIMARY KEY, PASSWORD VARCHAR(20), EMAIL VARCHAR(50))");
+            this.statement.addBatch("CREATE TABLE Users (USERNAME VARCHAR(255) PRIMARY KEY, PASSWORD VARCHAR(255), EMAIL VARCHAR(255))");
 
             this.statement.addBatch("INSERT INTO Users VALUES('user', 'user', 'user@gmail.com'),\n"
                     + "('neil', 'luna8', 'neilluna8@gmail.com'),\n"
                     + "('stephen', 'delacruz9', 'stephendelacruz@gmail.com')");
-            
+
             this.statement.executeBatch();
             System.out.println("Tables created successfully.");
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-     
-     public void createTransactions(){
+
+    public void createTransactions() {
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
             this.checkExistedTable("TRANSACTIONS");
-            this.statement.addBatch("CREATE TABLE Transactions (ORDERID INT PRIMARY KEY, USERNAME VARCHAR(255), TOTALPRICE DOUBLE, "
-                    + "CONSTRAINT Transactions_USERNAME_fk FOREIGN KEY (USERNAME) REFERENCES Users (USERNAME))");
-            
+            this.statement.addBatch("CREATE TABLE Transactions (ORDERID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), USERNAME VARCHAR(255), TOTALPRICE DOUBLE)");
+
             this.statement.executeBatch();
             System.out.println("Tables created successfully.");
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -163,6 +188,18 @@ public class DatabaseInitializer {
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+
+    public void dropAllTables() {
+        String[] tables = {"OrderItems", "Transactions", "Products", "Users"};
+        for (String table : tables) {
+            try {
+                statement.executeUpdate("DROP TABLE IF EXISTS PDC." + table);
+                System.out.println("Dropped table: " + table);
+            } catch (SQLException e) {
+                System.err.println("Error dropping " + table + ": " + e.getMessage());
+            }
         }
     }
 
