@@ -87,7 +87,7 @@ public class DatabaseInitializer {
         }
     }
 
-    public void createProducts() {
+    public void createProductsTable() {
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
             this.checkExistedTable("PRODUCTS");
@@ -136,7 +136,7 @@ public class DatabaseInitializer {
         }
     }
 
-    public void createUsers() {
+    public void createUsersTable() {
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
             this.checkExistedTable("USERS");
@@ -154,7 +154,7 @@ public class DatabaseInitializer {
         }
     }
 
-    public void createTransactions() {
+    public void createTransactionsTable() {
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
             this.checkExistedTable("TRANSACTIONS");
