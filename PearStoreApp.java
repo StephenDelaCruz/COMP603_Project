@@ -1,8 +1,8 @@
-/*
+*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package assignment2;
+package javaapplication8;
 
 /**
  *
@@ -10,11 +10,23 @@ package assignment2;
  */
 public class PearStoreApp {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+
+        DatabaseInitializer dbi = new DatabaseInitializer();
+        dbi.createProducts();
+        dbi.addWarrantyColumnToProducts();  
+        dbi.createUsers();
+        dbi.createTransactions();
+
+        MainMenuView mainView = new MainMenuView();
+        ProductModel productDAO = new ProductModel();
+        UserModel userDAO = new UserModel();
+        OrderModel orderDAO = new OrderModel();
+
+        CartController cartController = new CartController(orderDAO);
+        ProductController productController = new ProductController(productDAO, cartController);
+
+        MainMenuController mainController = new MainMenuController(mainView, productController, userDAO, orderDAO, cartController);
+        mainView.setVisible(true);
     }
-    
 }
