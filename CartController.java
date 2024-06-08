@@ -16,28 +16,19 @@ public class CartController {
     private Cart cart;
     private String currentUser;
     private OrderModel orderModel;
-    private MainMenuView mainView;
+    private ProductView productView;
 
-    public CartController(OrderModel orderDAO) {
+    public CartController(OrderModel orderModel) {
         this.cart = new Cart();
-        this.orderModel = orderDAO;
+        this.orderModel = orderModel;
     }
 
     public void addToCart(Product product) {
-        if (currentUser == null) { //checks to see if you have logged in
-            JOptionPane.showMessageDialog(mainView, "You need to log in to add items to the cart.");
-            return;
-        }
         cart.addItem(product);
-        JOptionPane.showMessageDialog(mainView, "Added to cart: " + product.getName());
+        JOptionPane.showMessageDialog(productView, "Added to cart: " + product.getName());
     }
 
     public void viewCart() {
-        if (currentUser == null) {
-            JOptionPane.showMessageDialog(mainView, "You need to log in to view the cart.");
-            return;
-        }
-
         CartView cartView = new CartView();
         cartView.setCartList(cart.getItems());
         cartView.setVisible(true);
@@ -83,6 +74,10 @@ public class CartController {
         cart = new Cart();  //this resets the cart so that it is empty again
         cartView.setCartList(cart.getItems());
     }
+    
+    public boolean isItemInCart(Product product){
+        return cart.getItems().contains(product);
+    }
 
     public void setCurrentUser(String username) {
         this.currentUser = username;
@@ -91,5 +86,4 @@ public class CartController {
     public String getCurrentUser() {
         return currentUser;
     }
-    
 }
