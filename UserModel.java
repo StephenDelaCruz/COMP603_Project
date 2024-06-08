@@ -2,26 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package assignment2;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+package javaapplication8;
 
 /**
  *
- * @author neill
+ * @author mcste
  */
+import java.sql.*;
+
 public class UserModel {
+
     private static final String URL = "jdbc:derby:PearStoreDB_Ebd";
 
     public boolean validateUser(String username, String password) {
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, "pdc", "pdc");
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, username);
             pstmt.setString(2, password);
@@ -30,7 +27,7 @@ public class UserModel {
                 return rs.next();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("User already exists");
         }
 
         return false;
@@ -40,7 +37,7 @@ public class UserModel {
         String query = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, "pdc", "pdc");
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+                PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, username);
             pstmt.setString(2, password);
@@ -49,7 +46,11 @@ public class UserModel {
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getSQLState().equals("23505")) {  
+                System.out.println("User already exists");  
+            } else {
+                e.printStackTrace();  
+            }
         }
 
         return false;
