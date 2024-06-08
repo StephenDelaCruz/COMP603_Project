@@ -14,11 +14,11 @@ public class UserModel {
 
     private static final String URL = "jdbc:derby:PearStoreDB_Ebd";
 
-    public boolean validateUser(String username, String password) {
+    public boolean authenticateUser(String username, String password) {
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, "pdc", "pdc");
-                PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, username);
             pstmt.setString(2, password);
@@ -27,7 +27,7 @@ public class UserModel {
                 return rs.next();
             }
         } catch (SQLException e) {
-            System.out.println("User already exists");
+            e.printStackTrace();
         }
 
         return false;
@@ -37,7 +37,7 @@ public class UserModel {
         String query = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, "pdc", "pdc");
-                PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, username);
             pstmt.setString(2, password);
@@ -46,11 +46,7 @@ public class UserModel {
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            if (e.getSQLState().equals("23505")) {  
-                System.out.println("User already exists");  
-            } else {
-                e.printStackTrace();  
-            }
+            e.printStackTrace();
         }
 
         return false;
