@@ -24,12 +24,6 @@ public class Product {
         this.warranty = warranty;
     }
 
-    public Product(String name, double price, int stock) {
-        this.name = name;
-        this.price = price;
-        this.stock = stock;
-    }
-
     public int getId() {
         return id;
     }
