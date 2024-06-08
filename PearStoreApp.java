@@ -14,19 +14,18 @@ public class PearStoreApp {
 
         DatabaseInitializer dbi = new DatabaseInitializer();
         dbi.createProductsTable();
-        dbi.addWarrantyColumnToProducts();  
+        dbi.addWarrantyToProducts(); 
         dbi.createUsersTable();
         dbi.createTransactionsTable();
 
         MainMenuView mainView = new MainMenuView();
-        ProductModel productDAO = new ProductModel();
-        UserModel userDAO = new UserModel();
-        OrderModel orderDAO = new OrderModel();
+        ProductModel productModel = new ProductModel();
+        LoginModel loginModel = new LoginModel();
+        OrderModel orderModel = new OrderModel();
 
-        CartController cartController = new CartController(orderDAO);
-        ProductController productController = new ProductController(productDAO, cartController);
+        CartController cartController = new CartController(orderModel);
+        ProductController productController = new ProductController(productModel, cartController);
 
-        MainMenuController mainController = new MainMenuController(mainView, productController, userDAO, orderDAO, cartController);
+        MainMenuController mainController = new MainMenuController(mainView, productController, loginModel, orderModel, cartController);
         mainView.setVisible(true);
     }
-}
