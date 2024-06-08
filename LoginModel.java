@@ -10,7 +10,7 @@ package javaapplication8;
  */
 import java.sql.*;
 
-public class UserModel {
+public class LoginModel {
 
     private static final String URL = "jdbc:derby:PearStoreDB_Ebd";
 
