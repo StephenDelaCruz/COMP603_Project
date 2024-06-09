@@ -10,6 +10,7 @@ package assignment2;
  */
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class CartView extends JFrame {
 
@@ -49,7 +50,7 @@ public class CartView extends JFrame {
         return removeItemButton;
     }
 
-    public void setCartList(java.util.List<Product> products) {
+    public void setCartList(List<Product> products) {
         listModel.clear();
         for (Product product : products) {
             listModel.addElement(product);
