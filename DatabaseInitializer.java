@@ -87,7 +87,7 @@ public class DatabaseInitializer {
     public void addWarrantyToProductsTable() {
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);  Statement stmt = conn.createStatement()) {
 
-            if (!checkExistedTable("PRODUCTS")) {
+            if (checkExistedTable("PRODUCTS")) {
                 stmt.execute("ALTER TABLE Products ADD COLUMN WARRANTY INT");
                 System.out.println("Added WARRANTY column to Products table.");
 
