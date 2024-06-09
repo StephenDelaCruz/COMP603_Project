@@ -6,15 +6,15 @@ package javaapplication8;
 
 /**
  *
- * @author mcste
+ * @author neill
  */
 public class Product {
+
     private int id;
     private String name;
     private double price;
     private int stock;
-        private int warranty;  
-
+    private int warranty;
 
     public Product(int id, String name, double price, int stock, int warranty) {
         this.id = id;
@@ -43,18 +43,16 @@ public class Product {
     public int getStock() {
         return stock;
     }
-    
+
     public int getWarranty() {
         return warranty;
     }
 
-
     public void updateStock(int quantity) {
         stock -= quantity;
     }
-    
-    public String toString(){
+
+    public String toString() {
         return String.format("ProductID: %d, Item: %s, Price: $%.2f, Stock: %d", id, name, price, stock);
     }
 }
-
