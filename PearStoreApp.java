@@ -14,7 +14,6 @@ public class PearStoreApp {
 
         DatabaseInitializer dbi = new DatabaseInitializer();
         dbi.createProductsTable();
-        dbi.addWarrantyToProductsTable(); 
         dbi.createUsersTable();
         dbi.createTransactionsTable();
 
