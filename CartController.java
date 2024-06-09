@@ -11,8 +11,9 @@ import javax.swing.JOptionPane;
  *
  * @author neill
  */
+
 public class CartController {
-    
+
     private Cart cart;
     private String currentUser;
     private OrderModel orderModel;
@@ -65,13 +66,13 @@ public class CartController {
             }
         }
         
-        //this sechtion places the order
+        //this section places the order
         double totalPrice = cart.getTotalPrice();
         Order order = new Order(0, new ArrayList<>(cart.getItems()), totalPrice, currentUser);
         orderModel.saveOrder(order);
         JOptionPane.showMessageDialog(cartView, "Order placed successfully!");
 
-        cart = new Cart();  //this resets the cart so that it is empty again
+        cart = new Cart(); //this resets the cart so that it is empty again
         cartView.setCartList(cart.getItems());
     }
     
