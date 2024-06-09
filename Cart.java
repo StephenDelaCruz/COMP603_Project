@@ -9,10 +9,11 @@ import java.util.List;
 
 /**
  *
- * @author aweso
+ * @author neill
  */
+
 public class Cart {
-private List<Product> items;
+    private List<Product> items;
 
     public Cart() {
         items = new ArrayList<>();
@@ -20,6 +21,10 @@ private List<Product> items;
 
     public void addItem(Product product) {
         items.add(product);
+    }
+
+    public void removeItem(Product product) {
+        items.remove(product);
     }
 
     public List<Product> getItems() {
