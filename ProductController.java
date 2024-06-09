@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author mcste
+ * @author neill
  */
 public class ProductController {
 
