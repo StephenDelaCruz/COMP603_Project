@@ -21,7 +21,7 @@ public class ProductController {
         this.cartController = cartController;
     }
 
-    //displays our products along with the add to cart button and more info button
+    //displays our products along with the add to cart button and more info action button listeners
     public void displayProducts() {
         List<Product> products = productModel.getAllProducts();
         ProductView productView = new ProductView();
