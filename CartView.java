@@ -4,14 +4,14 @@
  */
 package assignment2;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  *
  * @author neill
  */
-public class CartView extends JFrame{
+import javax.swing.*;
+import java.awt.*;
+
+public class CartView extends JFrame {
 
     private JList<Product> cartList;
     private JButton placeOrderButton;
