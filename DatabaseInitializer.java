@@ -57,11 +57,11 @@ public class DatabaseInitializer {
     }
 
     //creates our products table if they don't already exist
-    public void createProductsTable() {
+    public void createProductsTable() { 
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
-            checkExistedTable("PRODUCTS");
-            if (!checkExistedTable("PRODUCTS")) {
+            this.checkExistedTable("PRODUCTS");
+            if (!this.checkExistedTable("PRODUCTS")) {
                 this.statement.addBatch("CREATE TABLE Products (PRODUCTID INT PRIMARY KEY, ITEM VARCHAR(255), PRICE DOUBLE, STOCK INT)");
 
                 this.statement.addBatch("INSERT INTO Products VALUES (1, 'Laptop', 999.99, 6),\n"
@@ -84,10 +84,10 @@ public class DatabaseInitializer {
     }
 
     //add warranty column to products table after creation
-    public void addWarrantyToProductsTable() {
+    public void addWarrantyToProductsTable() { 
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);  Statement stmt = conn.createStatement()) {
 
-            if (checkExistedTable("PRODUCTS")) {
+            if (!this.checkExistedTable("PRODUCTS")) {
                 stmt.execute("ALTER TABLE Products ADD COLUMN WARRANTY INT");
                 System.out.println("Added WARRANTY column to Products table.");
 
@@ -110,11 +110,11 @@ public class DatabaseInitializer {
     }
 
     //creates users table if it doesn't already exist
-    public void createUsersTable() {
+    public void createUsersTable() { 
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
-            checkExistedTable("USERS");
-            if (!checkExistedTable("USERS")) {
+            this.checkExistedTable("USERS");
+            if (!this.checkExistedTable("USERS")) {
                 this.statement.addBatch("CREATE TABLE Users (USERNAME VARCHAR(15) PRIMARY KEY, PASSWORD VARCHAR(255), EMAIL VARCHAR(255))");
 
                 this.statement.addBatch("INSERT INTO Users VALUES('user', 'user', 'user@gmail.com'),\n"
@@ -130,11 +130,11 @@ public class DatabaseInitializer {
     }
 
     //create transaction table
-    public void createTransactionsTable() {
+    public void createTransactionsTable() { 
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             this.statement = conn.createStatement();
-            checkExistedTable("TRANSACTIONS");
-            if (!checkExistedTable("TRANSACTIONS")) {
+            this.checkExistedTable("TRANSACTIONS");
+            if (!this.checkExistedTable("TRANSACTIONS")) {
                 this.statement.addBatch("CREATE TABLE Transactions (ORDERID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), USERNAME VARCHAR(255), TOTALPRICE DOUBLE)");
 
                 this.statement.executeBatch();
@@ -146,17 +146,18 @@ public class DatabaseInitializer {
     }
 
     //checks to see if table exists. returns true or false depending on if it exists or not
-    public boolean checkExistedTable(String name) {
+    public boolean checkExistedTable(String name) { 
         try {
             DatabaseMetaData dbmd = this.conn.getMetaData();
             String[] types = {"TABLE"};
+            statement = this.conn.createStatement();
             ResultSet rs = dbmd.getTables(null, null, null, types);
 
             return rs.next();
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            return false;
         }
+        return false;
     }
 }
