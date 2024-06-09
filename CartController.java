@@ -25,8 +25,12 @@ public class CartController {
     }
 
     public void addToCart(Product product) {
+        if (currentUser == null) {
+            JOptionPane.showMessageDialog(mainMenuView, "You need to log in to add items to the cart.");
+            return;
+        }
         cart.addItem(product);
-        JOptionPane.showMessageDialog(productView, "Added to cart: " + product.getName());
+        JOptionPane.showMessageDialog(mainMenuView, "Added to cart: " + product.getName());
     }
 
     public void viewCart() {
