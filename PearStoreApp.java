@@ -6,7 +6,7 @@ package javaapplication8;
 
 /**
  *
- * @author mcste
+ * @author neill
  */
 public class PearStoreApp {
 
@@ -14,7 +14,7 @@ public class PearStoreApp {
 
         DatabaseInitializer dbi = new DatabaseInitializer();
         dbi.createProductsTable();
-        dbi.addWarrantyToProducts(); 
+        dbi.addWarrantyToProductsTable(); 
         dbi.createUsersTable();
         dbi.createTransactionsTable();
 
@@ -25,7 +25,10 @@ public class PearStoreApp {
 
         CartController cartController = new CartController(orderModel);
         ProductController productController = new ProductController(productModel, cartController);
+        LoginController loginController = new LoginController(loginModel, cartController, mainView);
 
-        MainMenuController mainController = new MainMenuController(mainView, productController, loginModel, orderModel, cartController);
+        MainMenuController mainController = new MainMenuController(mainView, productController, loginController, orderModel, cartController);
+        
         mainView.setVisible(true);
     }
+}
