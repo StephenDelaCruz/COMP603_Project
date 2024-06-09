@@ -26,7 +26,7 @@ public class CartController {
     }
 
     public void addToCart(Product product) {
-        if (currentUser == null) { checks if you are logged in before you add to cart
+        if (currentUser == null) { //checks if you are logged in before you add to cart
             JOptionPane.showMessageDialog(mainMenuView, "You need to log in to add items to the cart.");
             return;
         }
