@@ -6,7 +6,7 @@ package javaapplication8;
 
 /**
  *
- * @author neilll
+ * @author mcste
  */
 import javax.swing.*;
 import java.awt.*;
