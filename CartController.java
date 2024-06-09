@@ -18,6 +18,7 @@ public class CartController {
     private String currentUser;
     private OrderModel orderModel;
     private ProductView productView;
+    private MainMenuView mainMenuView;
 
     public CartController(OrderModel orderModel) {
         this.cart = new Cart();
