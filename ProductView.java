@@ -6,7 +6,7 @@ package assignment2;
 
 /**
  *
- * @author mcste
+ * @author neill
  */
 import javax.swing.*;
 import java.awt.*;
@@ -14,10 +14,9 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class ProductView extends JFrame {
-
     private JList<Product> productList;
     private JButton addToCartButton;
-    private JButton moreInfoButton;
+    private JButton moreInfoButton;  
     private DefaultListModel<Product> listModel;
 
     public ProductView() {
@@ -30,15 +29,14 @@ public class ProductView extends JFrame {
         productList = new JList<>(listModel);
 
         addToCartButton = new JButton("Add to Cart");
-        moreInfoButton = new JButton("More Info");  // Initialize the new button
+        moreInfoButton = new JButton("More Info");
 
-        // Create a panel for buttons
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addToCartButton);
-        buttonPanel.add(moreInfoButton);  // Add the new button to the panel
+        buttonPanel.add(moreInfoButton);
 
         add(new JScrollPane(productList), BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);  // Add the button panel instead of just the addToCartButton
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
     public JList<Product> getProductList() {
@@ -49,7 +47,7 @@ public class ProductView extends JFrame {
         return addToCartButton;
     }
 
-    public JButton getMoreInfoButton() {  // Getter for the new button
+    public JButton getMoreInfoButton() {
         return moreInfoButton;
     }
 
@@ -64,7 +62,7 @@ public class ProductView extends JFrame {
         addToCartButton.addActionListener(listener);
     }
 
-    public void setMoreInfoButtonListener(ActionListener listener) {  // Setter for the new button's listener
+    public void setMoreInfoButtonListener(ActionListener listener) {
         moreInfoButton.addActionListener(listener);
     }
 
