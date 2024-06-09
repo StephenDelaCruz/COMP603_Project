@@ -46,63 +46,27 @@ public class DatabaseInitializer {
         }
     }
 
-    public void closeConnections() {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
-    }
-
     //creates our products table if they don't already exist
     public void createProductsTable() { 
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             statement = conn.createStatement();
-            checkExistedTable("PRODUCTS");           
+            checkExistedTable("PRODUCTS");   
             if (!checkExistedTable("PRODUCTS")) {
-                statement.addBatch("CREATE TABLE Products (PRODUCTID INT PRIMARY KEY, ITEM VARCHAR(255), PRICE DOUBLE, STOCK INT)");
+                statement.addBatch("CREATE TABLE Products (PRODUCTID INT PRIMARY KEY, ITEM VARCHAR(255), PRICE DOUBLE, STOCK INT, WARRANTY INT)");
 
-                statement.addBatch("INSERT INTO Products VALUES (1, 'Laptop', 999.99, 6),\n"
-                        + "(2, 'Computer', 1499.99, 35),\n"
-                        + "(3, 'Phone', 599.99, 23),\n"
-                        + "(4, 'Tablet', 299.99, 8),\n"
-                        + "(5, 'Headphones', 99.99, 4),\n"
-                        + "(6, 'Earphones', 84.99, 12),\n"
-                        + "(7, 'Speaker', 109.99, 11),\n"
-                        + "(8, 'Printer', 199.99, 17),\n"
-                        + "(9, 'Camera', 899.99, 19)");
+                statement.addBatch("INSERT INTO Products VALUES (1, 'Laptop', 999.99, 6, 2),\n"
+                        + "(2, 'Computer', 1499.99, 35, 3),\n"
+                        + "(3, 'Phone', 599.99, 23, 1),\n"
+                        + "(4, 'Tablet', 299.99, 8, 1),\n"
+                        + "(5, 'Headphones', 99.99, 4, 1),\n"
+                        + "(6, 'Earphones', 84.99, 12, 1),\n"
+                        + "(7, 'Speaker', 109.99, 11, 2),\n"
+                        + "(8, 'Printer', 199.99, 17, 2),\n"
+                        + "(9, 'Camera', 899.99, 19, 2)");
 
                 statement.executeBatch();
 
                 System.out.println("Tables created successfully.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //add warranty column to products table after creation
-    public void addWarrantyToProductsTable() { 
-        try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);  Statement stmt = conn.createStatement()) {
-
-            if (!checkExistedTable("PRODUCTS")) {
-                stmt.execute("ALTER TABLE Products ADD COLUMN WARRANTY INT");
-                System.out.println("Added WARRANTY column to Products table.");
-
-                stmt.executeUpdate("UPDATE Products SET WARRANTY = CASE "
-                        + "WHEN ITEM='Laptop' THEN 2 "
-                        + "WHEN ITEM='Computer' THEN 3 "
-                        + "WHEN ITEM='Phone' THEN 1 "
-                        + "WHEN ITEM='Tablet' THEN 1 "
-                        + "WHEN ITEM='Headphones' THEN 1 "
-                        + "WHEN ITEM='Earphones' THEN 1 "
-                        + "WHEN ITEM='Speaker' THEN 2 "
-                        + "WHEN ITEM='Printer' THEN 2 "
-                        + "WHEN ITEM='Camera' THEN 2 "
-                        + "ELSE 0 END");
-                System.out.println("Updated WARRANTY values for products.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -129,7 +93,7 @@ public class DatabaseInitializer {
         }
     }
 
-    //create transaction table
+    //create transaction table if it doesn't already exist
     public void createTransactionsTable() { 
         try ( Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             statement = conn.createStatement();
