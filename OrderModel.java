@@ -6,7 +6,7 @@ package assignment2;
 
 /**
  *
- * @author neill
+ * @author mcste
  */
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ public class OrderModel {
 
     private static final String URL = "jdbc:derby:PearStoreDB_Ebd";
 
+    //saves your order into our database and adds it to the transactions table
     public void saveOrder(Order order) {
         String insertTransaction = "INSERT INTO Transactions (ORDERID, USERNAME, TOTALPRICE) VALUES (DEFAULT, ?, ?)";
         String updateStock = "UPDATE Products SET STOCK = STOCK - ? WHERE PRODUCTID = ?";
@@ -52,6 +53,7 @@ public class OrderModel {
         }
     }
 
+    //retrieves your order from our database, which is then used for view orders button
     public List<Order> getOrdersByUsername(String username) {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM Transactions WHERE USERNAME = ?";
@@ -73,5 +75,4 @@ public class OrderModel {
 
         return orders;
     }
-
 }
